@@ -67,7 +67,7 @@ open class SideMenuTransition: UIPercentDrivenInteractiveTransition {
     required public init(sideMenuManager: SideMenuManager) {
         super.init()
         
-        NotificationCenter.default.addObserver(self, selector:#selector(handleNotification), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(handleNotification), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector:#selector(handleNotification), name: NSNotification.Name.UIApplicationWillChangeStatusBarFrame, object: nil)
         self.sideMenuManager = sideMenuManager
     }
@@ -381,7 +381,7 @@ open class SideMenuTransition: UIPercentDrivenInteractiveTransition {
             originalSuperview.addSubview(mainViewController.view)
         }
         
-        if notification.name == NSNotification.Name.UIApplicationDidEnterBackground {
+        if notification.name == NSNotification.Name.UIApplicationWillResignActive {
             hideMenuStart().hideMenuComplete()
             menuViewController?.dismiss(animated: false, completion: nil)
             return
